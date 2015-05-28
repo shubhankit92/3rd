@@ -1,15 +1,16 @@
  var express  = require('express');
     var app      = express();                               // create our app w/ express
     var mongoose = require('mongoose');                     // mongoose for mongodb
-    var port     = process.env.PORT || 8080;                // set the port
-    var database = require('./config/database');            // load the database config
-        var morgan = require('morgan');             // log requests to the console (express4)
+    var port     = process.env.PORT || 8082;                // set the port
+    //var database = require('./config/database');            // load the database config
+    var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
     var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
     // configuration ===============================================================
-    mongoose.connect('mongodb://localhost:27017/uwO3mypu');     // connect to mongoDB database on modulus.io
-
+    //mongoose.connect('mongodb://127.0.0.1:27017/test');     // connect to mongoDB database on modulus.io
+    mongoose.connect('mongodb://'+process.env.MONGO_PORT_27017_TCP_ADDR+':'+process.env.MONGO_PORT_27017_TCP_PORT+'/test');
+    //mongoose.connect('mongodb://mongo:27017/test');
     app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
     app.use(morgan('dev'));                                         // log every request to the console
     app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
